@@ -2,23 +2,38 @@ import React, { Component } from 'react';
 import { Alert, AppRegistry, Button, StyleSheet, View, ScrollView, Image, Text, 
   FlatList, SectionList, ActivityIndicator, ImageBackground, StatusBar
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { HomeScreen } from './HomeScreen.js';
-import { DetailsScreen } from './DetailsScreen.js';
+import { ApiScreen } from './ApiScreen.js';
+
+// const MyApp = DrawerNavigator({
+//   Home: {
+//     screen: HomeScreen,
+//   },
+//   Api: {
+//     screen: ApiScreen,
+//   },
+// },
+// {
+//   drawerPosition: 'left',
+//   initialRouteName: 'Home',
+//   drawerBackgroundColor: '#f39c12',
+//   drawerWidth: 200
+// }
+// );
 
 const RootStack = StackNavigator(
   {
     Home: {
       screen: HomeScreen,
     },
-    Details: {
-      screen: DetailsScreen,
+    Api: {
+      screen: ApiScreen,
     },
   },
   {
     //headerMode: 'none',
     initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#2c3e50',
