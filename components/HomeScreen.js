@@ -10,7 +10,7 @@ export class HomeScreen extends React.Component {
     drawerLabel: 'Home',
     drawerIcon: ({ tintColor }) => (
       <Image
-        source={require('./bck.png')}
+        source={require('../img/bck.png')}
         style={[styles.icon, {tintColor: tintColor}]}
       />
     ),

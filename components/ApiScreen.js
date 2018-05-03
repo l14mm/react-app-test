@@ -10,7 +10,7 @@ export class ApiScreen extends React.Component {
       drawerLabel: 'Api',
       drawerIcon: ({ tintColor }) => (
         <Image
-          source={require('./bck.png')}
+          source={require('../img/bck.png')}
           style={[styles.icon, {tintColor: tintColor}]}
         />
       ),
@@ -20,14 +20,16 @@ export class ApiScreen extends React.Component {
       this.state = { 
         isLoading: true,
         data: [{'key': '0', 'value': 'response'}],
-        api1: 'http://192.168.1.78:8000/api/name1',
+        currentApi: 'http://192.168.1.76:9000/api/name1',
+        api1: 'http://192.168.1.76:9000/api/name1',
+        api2: 'http://192.168.1.76:9000/api/name2',
        };
        this._onGetName1 = this._onGetName1.bind(this);
        this._setApi1 = this._setApi1.bind(this);
        this._setApi2 = this._setApi2.bind(this);
     }
     _onGetName1() {
-      fetch(this.state.api1)
+      fetch(this.state.currentApi)
         .then((response) => response.json())
         .then((responseJson) => {
           //this.name1 = responseJson.message
@@ -41,12 +43,12 @@ export class ApiScreen extends React.Component {
     }
     _setApi1() {
       this.setState({
-        api1: 'http://192.168.1.78:8000/api/name1', 
+        currentApi: this.state.api1, 
       })
     }
     _setApi2() {
       this.setState({
-        api1: 'http://192.168.1.78:8000/api/name2', 
+        currentApi: this.state.api2, 
       })
     }
     addToResponseData(value) {
@@ -79,7 +81,7 @@ export class ApiScreen extends React.Component {
           </View>
           <View style={styles.buttonContainer}>
             <TextInput 
-            value={this.state.api1}
+            value={this.state.currentApi}
             onChangeText={(text) => this.setState({api1: text})}
             ></TextInput>
             <Button

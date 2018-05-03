@@ -3,8 +3,14 @@ import { Alert, AppRegistry, Button, StyleSheet, View, ScrollView, Image, Text,
   FlatList, SectionList, ActivityIndicator, ImageBackground, StatusBar
 } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import { HomeScreen } from './HomeScreen.js';
-import { ApiScreen } from './ApiScreen.js';
+import { HomeScreen } from './components/HomeScreen.js';
+import { ApiScreen } from './components/ApiScreen.js';
+import { LoginScreen } from './components/LoginScreen.js'
+
+import MemberScreen from './components/MemberScreen';
+import SignUpScreen from './components/SignUpScreen';
+import BalancesScreen from './components/BalancesScreen.js';
+import AccountScreen from './components/AccountScreen.js';
 
 // const MyApp = DrawerNavigator({
 //   Home: {
@@ -24,16 +30,25 @@ import { ApiScreen } from './ApiScreen.js';
 
 const RootStack = StackNavigator(
   {
-    Home: {
-      screen: HomeScreen,
+    Login: {
+      screen: LoginScreen,
     },
-    Api: {
-      screen: ApiScreen,
+    MembersArea: {
+      screen: MemberScreen,
     },
+    SignUp: {
+      screen: SignUpScreen
+    },
+    Balances: {
+      screen: BalancesScreen
+    },
+    Account: {
+      screen: AccountScreen
+    }
   },
   {
     //headerMode: 'none',
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#2c3e50',
