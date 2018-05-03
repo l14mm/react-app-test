@@ -24,7 +24,6 @@ export default class AccountScreen extends Component {
     const { params } = this.props.navigation.state;
     console.log(params.index);
     this.state = {
-        index: params.index,
         name: params.name,
         sortCode: params.sortCode,
         accountNumber: params.accountNumber,

@@ -88,7 +88,6 @@ export default class BalancesScreen extends Component {
 
   onAccountDetails(index) {
     this.props.navigation.navigate('Account', {
-        index: index,
         name: this.state.accounts[index].name,
         sortCode: this.state.accounts[index].sortCode,
         accountNumber: this.state.accounts[index].accountNumber,
