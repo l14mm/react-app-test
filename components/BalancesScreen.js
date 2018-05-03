@@ -28,6 +28,17 @@ export default class BalancesScreen extends Component {
 
     this.state = {
       isLoading: false,
+      accounts: [
+          {name: 'Current Account', balance: '560.45', sortCode: '05-23-81', accountNumber: '45367863', key: 1},
+          {name: 'Savings Account', balance: '14000.01', sortCode: '05-23-81', accountNumber: '45367863', key: 2},
+          {name: 'Credit Card', balance: '5000.90', sortCode: '05-23-81', accountNumber: '45367863', key: 3},
+          {name: 'Regular Saver1', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 4},
+          {name: 'Regular Saver2', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 5},
+          {name: 'Regular Saver3', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 6},
+          {name: 'Regular Saver4', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 7},
+          {name: 'Regular Saver5', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 8},
+          {name: 'Regular Saver6', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 9},
+      ]
     };
 
     this.onPressBack = this.onPressBack.bind(this);
@@ -77,7 +88,11 @@ export default class BalancesScreen extends Component {
 
   onAccountDetails(index) {
     this.props.navigation.navigate('Account', {
-        index: index
+        index: index,
+        name: this.state.accounts[index].name,
+        sortCode: this.state.accounts[index].sortCode,
+        accountNumber: this.state.accounts[index].accountNumber,
+        balance: this.state.accounts[index].balance,
     });
   }
 
@@ -95,17 +110,7 @@ export default class BalancesScreen extends Component {
     backgroundColor: '#34495e'
     }}>
         <FlatList 
-        data={[
-            {name: 'Current Account', balance: '560.45', sortCode: '05-23-81', accountNumber: '45367863', key: 1},
-            {name: 'Savings Account', balance: '14000.01', sortCode: '05-23-81', accountNumber: '45367863', key: 2},
-            {name: 'Credit Card', balance: '5000.90', sortCode: '05-23-81', accountNumber: '45367863', key: 3},
-            {name: 'Regular Saver1', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 4},
-            {name: 'Regular Saver2', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 5},
-            {name: 'Regular Saver3', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 6},
-            {name: 'Regular Saver4', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 7},
-            {name: 'Regular Saver5', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 8},
-            {name: 'Regular Saver6', balance: '5000.00', sortCode: '05-23-81', accountNumber: '45367863', key: 9},
-        ]}
+        data={this.state.accounts}
         style={{padding:10}}
         keyExtractor={(item, index) => item.key.toString()}
         renderItem={({item, index}) => 

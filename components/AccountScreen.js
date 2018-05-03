@@ -23,7 +23,13 @@ export default class AccountScreen extends Component {
 
     const { params } = this.props.navigation.state;
     console.log(params.index);
-    this.state = {index: params.index};
+    this.state = {
+        index: params.index,
+        name: params.name,
+        sortCode: params.sortCode,
+        accountNumber: params.accountNumber,
+        balance: params.balance,
+    };
 
     this.onPressBack = this.onPressBack.bind(this);
     this.growAnimated = new Animated.Value(0);
@@ -72,7 +78,10 @@ export default class AccountScreen extends Component {
         alignItems: 'center',
         justifyContent: 'center',
         }}>
-            <Text style={{fontSize: 20, color: 'white'}}>Account id: {this.state.index}</Text>
+            <Text style={{fontSize: 20, color: 'white'}}>Account name: {this.state.name}</Text>
+            <Text style={{fontSize: 20, color: 'white'}}>Sort Code: {this.state.sortCode}</Text>
+            <Text style={{fontSize: 20, color: 'white'}}>Account number: {this.state.accountNumber}</Text>
+            <Text style={{fontSize: 20, color: 'white'}}>Balance: £{this.state.balance}</Text>
         </View>
         <View style={styles.container}>
             <TouchableOpacity
