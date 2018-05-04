@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { ImageBackground, StyleSheet, Image, View, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, AsyncStorage, Button } from 'react-native'
+import { ImageBackground, StyleSheet, Image, View, Text, KeyboardAvoidingView, 
+  TextInput, TouchableOpacity, AsyncStorage, Button, Platform, SoftInputMode,
+  Keyboard } from 'react-native'
 import UserInput from './UserInput';
 import Dimensions from 'Dimensions';
 import PropTypes from 'prop-types';
@@ -11,9 +13,12 @@ import usernameImg from '../img/username.png';
 import passwordImg from '../img/password.png';
 import eyeImg from '../img/eye_black.png';
 
+const isAndroid = Platform.OS === 'android';
+
 export class LoginScreen extends Component {
   static navigationOptions = {
-    title: 'Login'
+    title: 'Logins',
+    header: null,
   }
 
   constructor(props) {
@@ -24,14 +29,21 @@ export class LoginScreen extends Component {
       invalidLogin: false,
       password: null
     };
+
     this.showPass = this.showPass.bind(this);
     this.onLogin = this.onLogin.bind(this);
     this.passwordChange = this.passwordChange.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.onForgottenPassword = this.passwordChange.bind(this);
     this.storeItem('token', 'myToken123')
-    this.props.navigation.navigate('Balances')
+    //this.props.navigation.navigate('Balances')
   }
+
+  // componentDidMount() {
+  //   if (isAndroid) {
+  //     SoftInputMode.set(SoftInputMode.ADJUST_PAN);
+  //   }
+  // }
 
   showPass() {
     this.state.press === false
@@ -71,6 +83,7 @@ export class LoginScreen extends Component {
   }
 
   onLogin(callback) {
+    Keyboard.dismiss();
     if (this.state.password != '123') {
       this.setState({invalidLogin: !this.state.invalidLogin})
       setTimeout(() =>
@@ -97,15 +110,20 @@ export class LoginScreen extends Component {
 
   render() {
     return (
-      <ImageBackground style={styles.background}> //source={backgroundSrc}
+      <ImageBackground style={styles.background}>
+      <KeyboardAvoidingView behavior="padding" style={{
+      flex: 4,
+      alignItems: 'center',
+      //borderWidth: 5,
+      //borderColor: 'green',
+      }}>
         {/* Logo */}
         <View style={styles.imageContainer}>
           <Image source={logoImg} style={styles.image} />
           <Text style={styles.text}>react-app</Text>
         </View>
+        <View style={{flex:1, justifyContent: 'flex-start'}}>
         {/* Login Form */}
-        <View style={{flex:3, justifyContent: 'flex-start'}}>
-        <KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
           <UserInput
             source={usernameImg}
             placeholder="Username"
@@ -128,29 +146,33 @@ export class LoginScreen extends Component {
             onPress={this.showPass}>
           <Image source={eyeImg} style={styles.iconEye} />
           </TouchableOpacity>
-        </KeyboardAvoidingView>
         {/* Submit (Login) */}
         <ButtonSubmit onLogin={this.onLogin.bind(this)} navigate={this.props.navigation.navigate} styles={{flex: 1, }}
         content={'LOGIN'}
         />
-        {/* Signup */}
-        <View style={styles.invalidContainer}>
-          <View style={styles.signupContainer}>
-            <Button style={styles.signupText}
-            title={'Create Account'}
-            color='white'
-            onPress={this.onSignUp} />
-            <Button style={styles.signupText}
-            title={'Forgot Password?'}
-            color='white'
-            onPress={this.onForgottenPassword} />
+        </View>
+        </KeyboardAvoidingView>
+          {/* Signup */}
+          <View style={styles.invalidContainer}>
+            <View style={styles.signupContainer}>
+              <TouchableOpacity
+              activeOpacity={1}
+              onPress={this.onSignUp} 
+              style={styles.signupText}>
+              <Text style={{color:'white'}}>Create Account</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+              activeOpacity={1}
+              onPress={this.onSignUp} 
+              style={styles.signupText}>
+              <Text style={{color:'white'}}>Forgot Password</Text>
+              </TouchableOpacity>
+            </View>
+              {this.state.invalidLogin ? 
+              <Text style={{flex: 2, color: '#e74c3c', fontSize: 20, left: DEVICE_WIDTH/3}}>Invalid Login!
+              </Text>
+              : null}
           </View>
-            {this.state.invalidLogin ? 
-            <Text style={{flex: 2, color: '#e74c3c', fontSize: 20, left: DEVICE_WIDTH/3}}>Invalid Login!
-            </Text>
-            : null}
-        </View>
-        </View>
       </ImageBackground>
     );
   }
@@ -170,6 +192,8 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
+    //borderWidth: 5,
+    //borderColor: 'red',
   },
   image: {
     width: 100, //80
@@ -184,14 +208,19 @@ const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
     alignItems: 'center',
-    //borderWidth: 5,
-    //borderColor: 'green',
+    borderWidth: 5,
+    borderColor: 'green',
   },
   btnEye: {
     position: 'absolute',
     top: 68,
     right: 32,
   },
+  // btnEye: {
+  //   position: 'relative',
+  //   top: -50,
+  //   right: -350,
+  // },
   iconEye: {
     width: 25,
     height: 25,
@@ -217,6 +246,14 @@ const styles = StyleSheet.create({
     left: 35,
     top: 9,
   },
+  invalidContainer: {
+    flex: 1,
+    width: DEVICE_WIDTH,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    //borderWidth: 5,
+    //borderColor: 'blue',
+  },
   signupContainer: {
     flex: 1,
     //top: 65,
@@ -226,16 +263,9 @@ const styles = StyleSheet.create({
     //borderWidth: 5,
     //borderColor: 'red',
   },
-  invalidContainer: {
-    flex: 1,
-    width: DEVICE_WIDTH,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    //borderWidth: 5,
-    //borderColor: 'blue',
-  },
   signupText: {
-    color: 'white',
+    //color: 'white',
+    //backgroundColor: 'transparent',
     backgroundColor: 'transparent',
   },
 });

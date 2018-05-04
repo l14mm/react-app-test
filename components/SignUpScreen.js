@@ -30,13 +30,17 @@ export default class SignUpScreen extends React.Component {
         : this.setState({showPass: true, press: false});
     }
 
+    onCreateAccount() {
+      console.log("create account");
+    }
+
     passwordChange(password) {
       this.state.password = password;
     }
 
     render() {
       return (
-        <ImageBackground style={styles.background}> //source={backgroundSrc}
+        <ImageBackground style={styles.background}>
           {/* Logo */}
           <View style={styles.imageContainer}>
             <Image source={logoImg} style={styles.image} />
@@ -68,7 +72,7 @@ export default class SignUpScreen extends React.Component {
             </TouchableOpacity>
           </KeyboardAvoidingView>
           {/* Submit (Login) */}
-          <ButtonSubmit onLogin={this.onSignUp.bind(this)} navigate={this.props.navigation.navigate} 
+          <ButtonSubmit onLogin={this.onCreateAccount.bind(this)} navigate={this.props.navigation.navigate} 
           content={'CREATE ACCOUNT'}
           />
           {/* Signup */}

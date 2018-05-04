@@ -136,16 +136,7 @@ export default class BalancesScreen extends Component {
             </TouchableOpacity>
         }
         />
-        <View style={{
-        flex: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        }}>
-            <Button title={'Do something'}
-            onPress={this.onPressDoSomething}
-            style={{width:40, height: 20, color:'blue', top: 20}} />
-        </View>
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
             <TouchableOpacity
             onPress={this.onPressBack}
             style={styles.button}
@@ -155,7 +146,7 @@ export default class BalancesScreen extends Component {
             <Animated.View
             style={[styles.circle, {transform: [{scale: changeScale}]}]}
             />
-        </View>
+        </View> */}
       </View>
     );
   }

@@ -77,10 +77,10 @@ export default class ButtonSubmit extends Component {
       inputRange: [0, 1],
       outputRange: [1, MARGIN],
     });
-
+    {/*changeWidth*/}
     return (
       <View style={styles.container}>
-        <Animated.View style={{width: DEVICE_WIDTH - MARGIN }}> {/*changeWidth*/}
+        <Animated.View style={{width: DEVICE_WIDTH - MARGIN }}>
           <TouchableOpacity
             style={styles.button}
             onPress={this._onPress}
