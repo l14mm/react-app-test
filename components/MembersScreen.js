@@ -8,7 +8,8 @@ import {
   Animated,
   Easing,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  Text
 } from 'react-native';
 import Dimensions from 'Dimensions';
 
@@ -16,7 +17,7 @@ import arrowImg from '../img/left-arrow.png';
 
 const SIZE = 40;
 
-export default class SecondScreen extends Component {
+export default class MembersScreen extends Component {
   constructor() {
     super();
 
@@ -84,27 +85,33 @@ export default class SecondScreen extends Component {
     height: null,
     backgroundColor: '#34495e'
     }}>
-        <View style={{
-        flex: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        }}>
-            <Button title={'Do something'}
-            onPress={this.onPressDoSomething}
-            style={{width:40, height: 20, color:'blue', top: 20}} />
-        </View>
-        <View style={styles.container}>
-            <TouchableOpacity
-            onPress={this.onPressBack}
-            style={styles.button}
-            activeOpacity={1}>
-            <Image style={styles.image} source={arrowImg} />
-            </TouchableOpacity>
-            <Animated.View
-            style={[styles.circle, {transform: [{scale: changeScale}]}]}
-            />
-        </View>
+      <View style={{padding: 10}}>
+        <TouchableOpacity 
+          style={{
+              backgroundColor: 'white',
+              borderColor: '#e74c3c',
+              borderLeftWidth: 2,
+              marginBottom: 10,
+              padding: 10,
+              borderRadius: 10,
+              width: '50%'
+          }}>
+          <Text>Account List</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={{
+              backgroundColor: 'white',
+              borderColor: '#e74c3c',
+              borderLeftWidth: 2,
+              marginBottom: 10,
+              padding: 10,
+              borderRadius: 10,
+              width: '50%'
+          }}>
+          <Text>Account Details</Text>
+        </TouchableOpacity>
       </View>
+    </View>
     );
   }
 }

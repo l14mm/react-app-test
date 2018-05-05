@@ -9,7 +9,8 @@ import {
   Easing,
   Button,
   AsyncStorage,
-  Text
+  Text,
+  FlatList,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 
@@ -20,7 +21,7 @@ const SIZE = 40;
 export default class AccountScreen extends Component {
   constructor(props) {
     super(props);
-
+    
     const { params } = this.props.navigation.state;
     console.log(params.index);
     this.state = {
@@ -28,11 +29,23 @@ export default class AccountScreen extends Component {
         sortCode: params.sortCode,
         accountNumber: params.accountNumber,
         balance: params.balance,
+        transactions: null
     };
 
     this.onPressBack = this.onPressBack.bind(this);
+    this.getTransactions = this.getTransactions.bind(this);
     this.growAnimated = new Animated.Value(0);
+    this.getTransactions();
   }
+
+//   {date: '02/03/2017', amount: 100, key: 1},
+//   {date: '02/03/2017', amount: 200, key: 2},
+//   {date: '02/03/2017', amount: 200, key: 3},
+//   {date: '02/03/2017', amount: 200, key: 4},
+//   {date: '02/03/2017', amount: 200, key: 5},
+//   {date: '02/03/2017', amount: 200, key: 6},
+//   {date: '02/03/2017', amount: 200, key: 7},
+// ]
 
   async userLogout() {
     try {
@@ -58,6 +71,19 @@ export default class AccountScreen extends Component {
       this.props.navigation.goBack();
     }, 500);
   }
+  
+  async getTransactions() {
+    //var DEMO_TOKEN = await AsyncStorage.getItem('token'); //STORAGE_KEY
+    //console.log(DEMO_TOKEN);
+    fetch("https://api.mockaroo.com/api/6bb15c60?count=20&key=dd95b940", {
+        method: "GET"
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+        this.setState({transactions: responseData});
+    })
+    .done();
+  }
 
   render() {
     const changeScale = this.growAnimated.interpolate({
@@ -70,28 +96,48 @@ export default class AccountScreen extends Component {
     flex: 1,
     width: null,
     height: null,
-    backgroundColor: '#34495e'
+    backgroundColor: '#34495e',
+    justifyContent: 'flex-start'
     }}>
         <View style={{
-        flex: 3,
         alignItems: 'center',
-        justifyContent: 'center',
+        paddingTop: 10
         }}>
             <Text style={{fontSize: 20, color: 'white'}}>Account name: {this.state.name}</Text>
             <Text style={{fontSize: 20, color: 'white'}}>Sort Code: {this.state.sortCode}</Text>
             <Text style={{fontSize: 20, color: 'white'}}>Account number: {this.state.accountNumber}</Text>
             <Text style={{fontSize: 20, color: 'white'}}>Balance: £{this.state.balance}</Text>
         </View>
-        <View style={styles.container}>
-            <TouchableOpacity
-            onPress={this.onPressBack}
-            style={styles.button}
-            activeOpacity={1}>
-            <Image style={styles.image} source={arrowImg} />
+        <View style={{}}>
+        <FlatList 
+        data={this.state.transactions}
+        style={{padding:10}}
+        keyExtractor={(item, index) => item.transaction_id.toString()} //item.key.toString()
+        renderItem={({item, index}) => 
+            <TouchableOpacity 
+            key={index}
+            //onPress={() => this.onAccountDetails(index)}
+            style={{
+                backgroundColor: 'white',
+                marginBottom: 10,
+                padding: 10,
+                borderRadius: 10,
+            }}>
+            <View key={'1-'+{index}} style={{}}>
+                <Text key={'2-'+{index}} style={{color: "black", fontSize: 20}}>Date: {item.date}
+                </Text>
+                <Text key={'3-'+{index}} style={{color: "black", fontSize: 20}}>Amount: £{item.amount.toString()}
+                </Text>
+            <View style={{}}>
+                <Text key={'4-'+{index}} style={{color: "black", fontSize: 16}}>Creditor: {item.creditor_first_name} {item.creditor_last_name}
+                </Text>
+                <Text key={'6-'+{index}} style={{color: "black", fontSize: 16}}>Debtor: {item.debtor_first_name} {item.debtor_last_name}
+                </Text>
+            </View>
+            </View>
             </TouchableOpacity>
-            <Animated.View
-            style={[styles.circle, {transform: [{scale: changeScale}]}]}
-            />
+        }
+        />
         </View>
       </View>
     );

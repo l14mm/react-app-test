@@ -17,7 +17,7 @@ const isAndroid = Platform.OS === 'android';
 
 export class LoginScreen extends Component {
   static navigationOptions = {
-    title: 'Logins',
+    title: 'Login',
     header: null,
   }
 
@@ -36,14 +36,8 @@ export class LoginScreen extends Component {
     this.onSignUp = this.onSignUp.bind(this);
     this.onForgottenPassword = this.passwordChange.bind(this);
     this.storeItem('token', 'myToken123')
-    //this.props.navigation.navigate('Balances')
+    this.props.navigation.navigate('Balances')
   }
-
-  // componentDidMount() {
-  //   if (isAndroid) {
-  //     SoftInputMode.set(SoftInputMode.ADJUST_PAN);
-  //   }
-  // }
 
   showPass() {
     this.state.press === false

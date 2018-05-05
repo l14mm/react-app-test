@@ -7,7 +7,7 @@ import { HomeScreen } from './components/HomeScreen.js';
 import { ApiScreen } from './components/ApiScreen.js';
 import { LoginScreen } from './components/LoginScreen.js'
 
-import MemberScreen from './components/MemberScreen';
+import MembersScreen from './components/MembersScreen';
 import SignUpScreen from './components/SignUpScreen';
 import BalancesScreen from './components/BalancesScreen.js';
 import AccountScreen from './components/AccountScreen.js';
@@ -34,7 +34,7 @@ const RootStack = StackNavigator(
       screen: LoginScreen,
     },
     MembersArea: {
-      screen: MemberScreen,
+      screen: MembersScreen,
     },
     SignUp: {
       screen: SignUpScreen

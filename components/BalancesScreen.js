@@ -10,7 +10,8 @@ import {
   Button,
   AsyncStorage,
   FlatList,
-  Text
+  Text,
+  Alert,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 
@@ -19,8 +20,34 @@ import arrowImg from '../img/left-arrow.png';
 const SIZE = 40;
 
 export default class BalancesScreen extends Component {
-    static navigationOptions = {
-        title: 'Accounts'
+    static navigationOptions = ({navigation, screenProps}) => {
+        const params = navigation.state.params || {};
+        return {
+        title: 'Accounts',
+        headerLeft: <View></View>,
+        headerRight: <Button title={'Logout'} 
+        //onPress={() => Alert.alert('Are you sure?')}
+        onPress={() => {
+            Alert.alert(
+                'Log out',
+                'Are you sure?',
+                [
+                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+                  {text: 'Yes', onPress: () => params.onLogout()},
+                ],
+                { cancelable: false }
+              )}}>
+            </Button>
+        }
+    }
+    setModalVisible() {
+      this.setState({modalVisible: !this.state});
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({
+            onLogout: this.onLogout,
+        })
     }
 
   constructor() {
@@ -28,6 +55,7 @@ export default class BalancesScreen extends Component {
 
     this.state = {
       isLoading: false,
+      modalVisible: false,
       accounts: [
           {name: 'Current Account', balance: '560.45', sortCode: '05-23-81', accountNumber: '45367863', key: 1},
           {name: 'Savings Account', balance: '14000.01', sortCode: '05-23-81', accountNumber: '45367863', key: 2},
@@ -42,7 +70,24 @@ export default class BalancesScreen extends Component {
     };
 
     this.onPressBack = this.onPressBack.bind(this);
+    this.onLogout = this.onLogout.bind(this);
     this.growAnimated = new Animated.Value(0);
+  }
+
+  onLogout() {
+    if (this.state.isLoading) return;
+
+    this.setState({isLoading: true});
+
+    Animated.timing(this.growAnimated, {
+      toValue: 1,
+      duration: 300,
+      easing: Easing.linear,
+    }).start();
+
+    setTimeout(() => {
+      this.props.navigation.goBack();
+    }, 500);
   }
 
   async userLogout() {
@@ -108,34 +153,34 @@ export default class BalancesScreen extends Component {
     height: null,
     backgroundColor: '#34495e'
     }}>
-        <FlatList 
-        data={this.state.accounts}
-        style={{padding:10}}
-        keyExtractor={(item, index) => item.key.toString()}
-        renderItem={({item, index}) => 
-            <TouchableOpacity 
-            key={index}
-            onPress={() => this.onAccountDetails(index)}
-            style={{
-                backgroundColor: 'white',
-                borderColor: '#e74c3c',
-                borderLeftWidth: 2,
-                marginBottom: 10,
-                padding: 10,
-                borderRadius: 10,
-            }}>
-            <View key={'1-'+{index}} style={{}}>
-            <Text key={'2-'+{index}} style={{color: "#e74c3c", fontSize: 20}}>{item.name}
-            </Text></View>
-            <View key={'v1-'+{index}}><Text key={'vt1-'+{index}} style={{color: '#bdc3c7'}}>{item.sortCode} | {item.accountNumber}</Text></View>
-            <View key={'v2-'+{index}}><Text key={'vt2-'+{index}} style={{
-                fontSize: 24,
-                color: 'black'
-            }}>
-            £{item.balance}</Text></View>
-            </TouchableOpacity>
-        }
-        />
+    <FlatList 
+    data={this.state.accounts}
+    style={{padding:10}}
+    keyExtractor={(item, index) => item.key.toString()}
+    renderItem={({item, index}) => 
+        <TouchableOpacity 
+        key={index}
+        onPress={() => this.onAccountDetails(index)}
+        style={{
+            backgroundColor: 'white',
+            borderColor: '#e74c3c',
+            borderLeftWidth: 2,
+            marginBottom: 10,
+            padding: 10,
+            borderRadius: 10,
+        }}>
+        <View key={'1-'+{index}} style={{}}>
+        <Text key={'2-'+{index}} style={{color: "#e74c3c", fontSize: 20}}>{item.name}
+        </Text></View>
+        <View key={'v1-'+{index}}><Text key={'vt1-'+{index}} style={{color: '#bdc3c7'}}>{item.sortCode} | {item.accountNumber}</Text></View>
+        <View key={'v2-'+{index}}><Text key={'vt2-'+{index}} style={{
+            fontSize: 24,
+            color: 'black'
+        }}>
+        £{item.balance}</Text></View>
+        </TouchableOpacity>
+    }
+    />
         {/* <View style={styles.container}>
             <TouchableOpacity
             onPress={this.onPressBack}
