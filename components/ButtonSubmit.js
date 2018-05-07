@@ -44,7 +44,7 @@ export default class ButtonSubmit extends Component {
       this._onGrow();
     }, 2000);
 
-    this.props.navigate('Balances')
+    this.props.navigate('MembersArea')
     //this.props.navigate('Balances');
     setTimeout(() => {
       this.setState({isLoading: false});

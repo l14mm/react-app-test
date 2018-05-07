@@ -12,6 +12,10 @@ import passwordImg from '../img/password.png';
 import eyeImg from '../img/eye_black.png';
 
 export default class SignUpScreen extends React.Component {
+    static navigationOptions = {
+      title: 'SignUp',
+    }
+
     constructor(props) {
         super(props);
         this.state = {

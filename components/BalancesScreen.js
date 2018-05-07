@@ -16,6 +16,7 @@ import {
 import Dimensions from 'Dimensions';
 
 import arrowImg from '../img/left-arrow.png';
+import { FaBeer } from 'react-icons/lib/fa'
 
 const SIZE = 40;
 
@@ -26,7 +27,6 @@ export default class BalancesScreen extends Component {
         title: 'Accounts',
         headerLeft: <View></View>,
         headerRight: <Button title={'Logout'} 
-        //onPress={() => Alert.alert('Are you sure?')}
         onPress={() => {
             Alert.alert(
                 'Log out',
@@ -40,9 +40,6 @@ export default class BalancesScreen extends Component {
             </Button>
         }
     }
-    setModalVisible() {
-      this.setState({modalVisible: !this.state});
-    }
 
     componentDidMount() {
         this.props.navigation.setParams({
@@ -55,7 +52,6 @@ export default class BalancesScreen extends Component {
 
     this.state = {
       isLoading: false,
-      modalVisible: false,
       accounts: [
           {name: 'Current Account', balance: '560.45', sortCode: '05-23-81', accountNumber: '45367863', key: 1},
           {name: 'Savings Account', balance: '14000.01', sortCode: '05-23-81', accountNumber: '45367863', key: 2},
@@ -153,6 +149,7 @@ export default class BalancesScreen extends Component {
     height: null,
     backgroundColor: '#34495e'
     }}>
+    <FaBeer />
     <FlatList 
     data={this.state.accounts}
     style={{padding:10}}

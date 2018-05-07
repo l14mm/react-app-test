@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Alert, AppRegistry, Button, StyleSheet, View, ScrollView, Image, Text, 
   FlatList, SectionList, ActivityIndicator, ImageBackground, StatusBar
 } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, TabNavigator } from 'react-navigation';
 import { HomeScreen } from './components/HomeScreen.js';
 import { ApiScreen } from './components/ApiScreen.js';
 import { LoginScreen } from './components/LoginScreen.js'

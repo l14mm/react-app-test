@@ -36,7 +36,7 @@ export class LoginScreen extends Component {
     this.onSignUp = this.onSignUp.bind(this);
     this.onForgottenPassword = this.passwordChange.bind(this);
     this.storeItem('token', 'myToken123')
-    this.props.navigation.navigate('Balances')
+    this.props.navigation.navigate('MembersArea')
   }
 
   showPass() {
@@ -155,12 +155,11 @@ export class LoginScreen extends Component {
               style={styles.signupText}>
               <Text style={{color:'white'}}>Create Account</Text>
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
               activeOpacity={1}
-              onPress={this.onSignUp} 
               style={styles.signupText}>
               <Text style={{color:'white'}}>Forgot Password</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
               {this.state.invalidLogin ? 
               <Text style={{flex: 2, color: '#e74c3c', fontSize: 20, left: DEVICE_WIDTH/3}}>Invalid Login!
