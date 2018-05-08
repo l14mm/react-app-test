@@ -12,16 +12,36 @@ import {
   Text
 } from 'react-native';
 import Dimensions from 'Dimensions';
-import { TabNavigator, TabBarBottom } from 'react-navigation';
+import { TabNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation';
 
 import arrowImg from '../img/left-arrow.png';
 import BalancesScreen from './BalancesScreen';
 import PersonalDetailsScreen from './PersonalDetailsScreen';
 // import FaBeer from 'react-icons/lib/fa/beer';
 //var FaBeer = require('react-icons/lib/fa/beer');
-import { FaBeer } from 'react-icons/lib/fa'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const SIZE = 40;
+
+const Drawer = DrawerNavigator({
+  Balances: { screen: BalancesScreen, },
+  PersonalDetails: { screen: PersonalDetailsScreen, }
+},
+{
+  //headerMode: 'none',
+  initialRouteName: 'Balances',
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: '#ecf0f1',
+    },
+    headerTintColor: '#0f469e', //text
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    headerRight: <Text>Hello</Text>
+  },
+}
+);
 
 const TabStack = TabNavigator({
   Balances: { screen: BalancesScreen, },
@@ -32,15 +52,18 @@ const TabStack = TabNavigator({
     tabBarIcon: ({ focused, tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Home') {
-        iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-      } else if (routeName === 'Settings') {
-        iconName = `ios-options${focused ? '' : '-outline'}`;
+      if (routeName === 'Balances') {
+        //iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        iconName = "money";
+      } else if (routeName === 'PersonalDetails') {
+        //iconName = `ios-options${focused ? '' : '-outline'}`;
+        iconName = "home";
       }
 
       // You can return any component that you like here! We usually use an
       // icon component from react-native-vector-icons
-      return <View />
+      //return <View />
+      return <Icon name={iconName} size={25} />
     },
   }),
   tabBarOptions: {
@@ -55,68 +78,10 @@ const TabStack = TabNavigator({
 );
 
 export default class MembersScreen extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isLoading: false,
-    };
-
-    this.onPressBack = this.onPressBack.bind(this);
-    this.growAnimated = new Animated.Value(0);
-  }
-
-  async userLogout() {
-    try {
-      await AsyncStorage.removeItem(STORAGE_KEY);
-      AlertIOS.alert("Logout Success!")
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
-  
-  async onPressDoSomething() {
-    var DEMO_TOKEN = await AsyncStorage.getItem('token'); //STORAGE_KEY
-    console.log(DEMO_TOKEN);
-    // fetch("http://localhost:3001/api/protected/random-quote", {
-    //     method: "GET",
-    //     headers: {
-    //     'Authorization': 'Bearer ' + DEMO_TOKEN
-    //     }
-    // })
-    // .then((response) => response.text())
-    // .then((quote) => {
-    //     AlertIOS.alert(
-    //     "Chuck Norris Quote:", quote)
-    // })
-    // .done();
-  }
-
-  onPressBack() {
-    if (this.state.isLoading) return;
-
-    this.setState({isLoading: true});
-
-    Animated.timing(this.growAnimated, {
-      toValue: 1,
-      duration: 300,
-      easing: Easing.linear,
-    }).start();
-
-    setTimeout(() => {
-      //Actions.pop();
-      this.props.navigation.goBack();
-    }, 500);
-  }
-
   render() {
-    const changeScale = this.growAnimated.interpolate({
-      inputRange: [0, 1],
-      outputRange: [1, SIZE],
-    });
-
     return (
-      <TabStack />
+      //<TabStack />
+      <Drawer />
     // <View style={{
     // flex: 1,
     // width: null,

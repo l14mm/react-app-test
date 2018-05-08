@@ -16,7 +16,7 @@ import {
 import Dimensions from 'Dimensions';
 
 import arrowImg from '../img/left-arrow.png';
-import { FaBeer } from 'react-icons/lib/fa'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const SIZE = 40;
 
@@ -25,8 +25,13 @@ export default class BalancesScreen extends Component {
         const params = navigation.state.params || {};
         return {
         title: 'Accounts',
-        headerLeft: <View></View>,
-        headerRight: <Button title={'Logout'} 
+        headerLeft: <TouchableOpacity
+        onPress={() => {
+            this.props.navigation.toggleDrawer();
+        }}>
+        <Icon name={'navicon'} size={20} color='#0f469e' style={{paddingLeft: 15}}/></TouchableOpacity>
+        ,//<View></View>
+        headerRight: <Button title={'Logout'} color='#0f469e'
         onPress={() => {
             Alert.alert(
                 'Log out',
@@ -47,9 +52,10 @@ export default class BalancesScreen extends Component {
         })
     }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
+    //this.props.navigation.toggleDrawer();
     this.state = {
       isLoading: false,
       accounts: [
@@ -143,38 +149,33 @@ export default class BalancesScreen extends Component {
     });
 
     return (
-    <View style={{
-    flex: 1,
-    width: null,
-    height: null,
-    backgroundColor: '#34495e'
-    }}>
-    <FaBeer />
+    <View style={styles.container}>
     <FlatList 
     data={this.state.accounts}
-    style={{padding:10}}
+    style={{padding:15}}
     keyExtractor={(item, index) => item.key.toString()}
     renderItem={({item, index}) => 
         <TouchableOpacity 
         key={index}
         onPress={() => this.onAccountDetails(index)}
-        style={{
-            backgroundColor: 'white',
-            borderColor: '#e74c3c',
-            borderLeftWidth: 2,
-            marginBottom: 10,
-            padding: 10,
-            borderRadius: 10,
-        }}>
-        <View key={'1-'+{index}} style={{}}>
-        <Text key={'2-'+{index}} style={{color: "#e74c3c", fontSize: 20}}>{item.name}
-        </Text></View>
-        <View key={'v1-'+{index}}><Text key={'vt1-'+{index}} style={{color: '#bdc3c7'}}>{item.sortCode} | {item.accountNumber}</Text></View>
-        <View key={'v2-'+{index}}><Text key={'vt2-'+{index}} style={{
-            fontSize: 24,
-            color: 'black'
-        }}>
-        £{item.balance}</Text></View>
+        style={styles.accountItem}>
+        <View style={styles.accountItemInner}>
+            <View>
+                <View key={'1-'+{index}} style={{}}>
+                <Text key={'2-'+{index}} style={{color: "#0f469e", fontSize: 20}}>{item.name}
+                </Text></View>
+                <View key={'v1-'+{index}}><Text key={'vt1-'+{index}} style={{color: '#bdc3c7'}}>{item.sortCode} | {item.accountNumber}</Text></View>
+            </View>
+            <View style={{
+                }}>
+                <View key={'v2-'+{index}}><Text key={'vt2-'+{index}} style={{
+                    fontSize: 20,
+                    color: '#0f469e',
+                    //alignSelf: 'flex-end',
+                }}>
+                £{item.balance}</Text></View>
+            </View>
+        </View>
         </TouchableOpacity>
     }
     />
@@ -198,30 +199,83 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 20,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: SIZE,
-    height: SIZE,
-    borderRadius: 100,
-    zIndex: 99,
-    backgroundColor: '#2980b9', //F035E0
-  },
-  circle: {
-    height: SIZE,
-    width: SIZE,
-    marginTop: -SIZE,
-    borderRadius: 100,
-    backgroundColor: '#2980b9', //F035E0
-  },
-  image: {
-    width: 24,
-    height: 24,
-  },
-});
+    container: {
+        flex: 1,
+        width: null,
+        height: null,
+        backgroundColor: '#ecf0f1'
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: SIZE,
+      height: SIZE,
+      borderRadius: 100,
+      zIndex: 99,
+      backgroundColor: '#2980b9', //F035E0
+    },
+    circle: {
+      height: SIZE,
+      width: SIZE,
+      marginTop: -SIZE,
+      borderRadius: 100,
+      backgroundColor: '#2980b9', //F035E0
+    },
+    image: {
+      width: 24,
+      height: 24,
+    },
+    accountItem: {
+      backgroundColor: 'white',
+      borderColor: '#2f73e0',
+      borderLeftWidth: 3,
+      marginBottom: 10,
+      borderRadius: 3,
+    },
+    accountItemInner: {
+        borderColor: '#7f8c8d',
+        borderWidth: 1,
+        padding: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderRadius: 2,
+    },
+  });
+
+  const stylesOld = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: null,
+        height: null,
+        backgroundColor: '#34495e'
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: SIZE,
+      height: SIZE,
+      borderRadius: 100,
+      zIndex: 99,
+      backgroundColor: '#2980b9', //F035E0
+    },
+    circle: {
+      height: SIZE,
+      width: SIZE,
+      marginTop: -SIZE,
+      borderRadius: 100,
+      backgroundColor: '#2980b9', //F035E0
+    },
+    image: {
+      width: 24,
+      height: 24,
+    },
+    accountItem: {
+      backgroundColor: 'white',
+      borderColor: '#e74c3c',
+      borderLeftWidth: 2,
+      marginBottom: 10,
+      padding: 10,
+      borderRadius: 10,
+    },
+  });
+    

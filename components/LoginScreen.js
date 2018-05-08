@@ -35,8 +35,8 @@ export class LoginScreen extends Component {
     this.passwordChange = this.passwordChange.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.onForgottenPassword = this.passwordChange.bind(this);
-    this.storeItem('token', 'myToken123')
-    this.props.navigation.navigate('MembersArea')
+    this.storeItem('token', 'myToken123');
+    this.props.navigation.navigate('MembersArea'); //MembersArea
   }
 
   showPass() {
